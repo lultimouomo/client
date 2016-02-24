@@ -1,12 +1,6 @@
 project(cmd)
 set(CMAKE_AUTOMOC TRUE)
 
-set(cmd_NAME ${APPLICATION_EXECUTABLE}cmd)
-set(cmd_SRC
-    cmd.cpp
-    simplesslerrorhandler.cpp
-    netrcparser.cpp
-   )
 include_directories(${CMAKE_SOURCE_DIR}/src/libsync
                     ${CMAKE_BINARY_DIR}/src/libsync
                    )
@@ -16,6 +10,26 @@ include_directories(${CMAKE_SOURCE_DIR}/csync/src
                     ${CMAKE_BINARY_DIR}/csync
                     ${CMAKE_BINARY_DIR}/csync/src
                    )
+
+IF( WIN32 )
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmd_version.rc.in
+        ${CMAKE_CURRENT_BINARY_DIR}/cmd_version.rc
+        @ONLY)
+    set(cmd_version ${CMAKE_CURRENT_BINARY_DIR}/cmd_version.rc)
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmd.manifest.in
+        ${CMAKE_CURRENT_BINARY_DIR}/cmd.manifest
+        @ONLY)
+ENDIF()
+
+set(cmd_NAME ${APPLICATION_EXECUTABLE}cmd)
+set(cmd_SRC
+    cmd.cpp
+    simplesslerrorhandler.cpp
+    netrcparser.cpp
+    ${cmd_version}
+   )
 
 if(NOT BUILD_LIBRARIES_ONLY)
    add_executable(${cmd_NAME}  ${cmd_SRC})

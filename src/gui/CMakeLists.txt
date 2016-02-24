@@ -184,13 +184,13 @@ qt_add_translation(client_I18N ${TRANSLATIONS})
 
 IF( WIN32 )
     configure_file(
-      ${CMAKE_CURRENT_SOURCE_DIR}/version.rc.in
-      ${CMAKE_CURRENT_BINARY_DIR}/version.rc
+      ${CMAKE_CURRENT_SOURCE_DIR}/gui_version.rc.in
+      ${CMAKE_CURRENT_BINARY_DIR}/gui_version.rc
       @ONLY)
-    set(client_version ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
+    set(gui_version ${CMAKE_CURRENT_BINARY_DIR}/gui_version.rc)
     configure_file(
-      ${CMAKE_CURRENT_SOURCE_DIR}/xpcompat.manifest.in
-      ${CMAKE_CURRENT_BINARY_DIR}/xpcompat.manifest
+      ${CMAKE_CURRENT_SOURCE_DIR}/gui.manifest.in
+      ${CMAKE_CURRENT_BINARY_DIR}/gui.manifest
       @ONLY)
 ENDIF()
 
@@ -198,7 +198,7 @@ set( final_src
     ${MIRALL_RC_SRC}
     ${client_SRCS}
     ${client_UI_SRCS}
-    ${client_version}
+    ${gui_version}
     ${guiMoc}
     ${client_I18N}
     ${3rdparty_SRC}

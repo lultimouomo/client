@@ -23,6 +23,18 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}
     "../3rdparty/libcrashreporter-qt/src/"
 )
 
+IF( WIN32 )
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/version.rc.in
+        ${CMAKE_CURRENT_BINARY_DIR}/version.rc
+        @ONLY)
+    set(crashreporter_version ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/xpcompat.manifest.in
+        ${CMAKE_CURRENT_BINARY_DIR}/xpcompat.manifest
+        @ONLY)
+ENDIF()
+
 
 if(NOT BUILD_LIBRARIES_ONLY)
     add_executable( ${CRASHREPORTER_EXECUTABLE} WIN32
@@ -30,6 +42,7 @@ if(NOT BUILD_LIBRARIES_ONLY)
         ${crashreporter_HEADERS_MOC}
         ${crashreporter_UI_HEADERS}
         ${crashreporter_RC_RCC}
+        ${crashreporter_version}
     )
 
     qt5_use_modules(${CRASHREPORTER_EXECUTABLE} Widgets Network)

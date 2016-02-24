@@ -31,6 +31,18 @@ if(SPARKLE_FOUND AND NOT BUILD_LIBRARIES_ONLY)
     list (APPEND OS_SPECIFIC_LINK_LIBRARIES ${SPARKLE_LIBRARY})
 endif()
 
+IF(WIN32)
+      configure_file(
+              ${CMAKE_CURRENT_SOURCE_DIR}/libsync_version.rc.in
+              ${CMAKE_CURRENT_BINARY_DIR}/libsync_version.rc
+              @ONLY)
+      set(libsync_version ${CMAKE_CURRENT_BINARY_DIR}/libsync_version.rc)
+      configure_file(
+              ${CMAKE_CURRENT_SOURCE_DIR}/libsync.manifest.in
+              ${CMAKE_CURRENT_BINARY_DIR}/libsync.manifest
+              @ONLY)
+ENDIF()
+
 set(libsync_SRCS
     account.cpp
     bandwidthmanager.cpp
@@ -69,6 +81,7 @@ set(libsync_SRCS
     creds/credentialscommon.cpp
     ../3rdparty/qjson/json.cpp
     ../3rdparty/certificates/p12topem.cpp
+    ${libsync_version}
 )
 
 if(TOKEN_AUTH_ONLY)
