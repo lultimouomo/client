@@ -188,6 +188,10 @@ IF( WIN32 )
       ${CMAKE_CURRENT_BINARY_DIR}/version.rc
       @ONLY)
     set(client_version ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
+    configure_file(
+      ${CMAKE_CURRENT_SOURCE_DIR}/xpcompat.manifest.in
+      ${CMAKE_CURRENT_BINARY_DIR}/xpcompat.manifest
+      @ONLY)
 ENDIF()
 
 set( final_src
